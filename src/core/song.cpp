@@ -114,6 +114,11 @@ struct Song::Private : public QSharedData {
   bool forced_compilation_on_;  // Set by the user
   bool forced_compilation_off_; // Set by the user
 
+  // A unique album ID 
+  // Used to distinguishes between albums from providers that have multiple 
+  // versions of a given album with the same title (e.g. Spotify)
+  QString album_id_ = "";
+
   float rating_;
   int playcount_;
   int skipcount_;
@@ -243,6 +248,7 @@ int Song::lastplayed() const { return d->lastplayed_; }
 int Song::score() const { return d->score_; }
 const QString& Song::cue_path() const { return d->cue_path_; }
 bool Song::has_cue() const { return !d->cue_path_.isEmpty(); }
+const QString& Song::album_id() const { return d->album_id_; }
 qint64 Song::beginning_nanosec() const { return d->beginning_; }
 qint64 Song::end_nanosec() const { return d->end_; }
 qint64 Song::length_nanosec() const { return d->end_ - d->beginning_; }
@@ -280,6 +286,8 @@ void Song::set_genre(const QString& v) { d->genre_ = v; }
 void Song::set_comment(const QString& v) { d->comment_ = v; }
 void Song::set_compilation(bool v) { d->compilation_ = v; }
 void Song::set_sampler(bool v) { d->sampler_ = v; }
+void Song::set_album_id(const QString& v) { d->album_id_ = v; }
+void Song::set_album_id(int v) { d->album_id_ = QString::number(v); }
 void Song::set_beginning_nanosec(qint64 v) { d->beginning_ = qMax(0ll, v); }
 void Song::set_end_nanosec(qint64 v) { d->end_ = v; }
 void Song::set_length_nanosec(qint64 v) { d->end_ = d->beginning_ + v; }
