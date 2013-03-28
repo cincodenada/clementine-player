@@ -102,6 +102,7 @@ void SpotifySearchProvider::SearchFinishedSlot(const pb::spotify::SearchResponse
 
     Result result(this);
     SpotifyService::SongFromProtobuf(track, &result.metadata_);
+	result.metadata_.set_album("Top Tracks");
 
     ret << result;
   }
